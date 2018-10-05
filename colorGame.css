@@ -1,0 +1,34 @@
+body{
+    background-color: #232323;
+    text-align: center;
+    color: white;
+    margin:0;
+    font-family: 'Oswald', sans-serif;
+}
+
+#colorPlatte{
+    width: 50%;
+    margin: 0 auto;
+}
+
+.square{
+    background-color: green;
+    width:30%;
+    padding-bottom: 30%;
+    float: left;
+    margin: 1.66%;
+}
+
+#header{
+    background-color: #849fc9;
+}
+
+#colorDisplay{
+    text-transform: uppercase;
+}
+
+#nav{
+    width: 100%;
+    background-color: white;
+    color: #849fc9;
+}
