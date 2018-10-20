@@ -4,8 +4,17 @@ let header = document.querySelector('#header');
 let colorDisplay = document.querySelector('#colorDisplay');
 let msg = document.querySelector('#msg');
 let resBt = document.querySelector('#resBt');
-let ezBt = document.querySelector('#ez');
-let hardBt = document.querySelector('#hard');
+let modeBt = document.querySelectorAll('.mode');
+
+// initialize header background color
+header.style.backgroundColor = '#849fc9';
+
+//diff mode button listener add
+for (let i = 0; i < modeBt.length; i++) {
+    modeBt[i].addEventListener('click', function() {
+        diffChange(i);
+    });
+}
 
 // initial values
 let diff = 6;
@@ -14,64 +23,25 @@ let picked = pickColor();
 colorDisplay.textContent = picked;
 let win = false;
 
-
-// initialize header background color
-header.style.backgroundColor='#849fc9';
-
 // add listener for bts
 //add listeners to resBt
-resBt.addEventListener('click', function(){
+resBt.addEventListener('click', function() {
     resGame();
 });
-
-//add listener for ez and hard bt
-ezBt.addEventListener('click', function() {
-    //change diff
-    diff = 3;
-    //get current header color
-    let headerC = header.style.backgroundColor;
-    //remove hard bt effect
-    hardBt.style.backgroundColor = '';
-    hardBt.style.color = headerC;
-    //add header background color to ez button
-    this.style.backgroundColor = headerC;
-    //change text colour
-    this.style.color = 'white';
-    //reset game with ez diff
-    resGame();
-});
-hardBt.addEventListener('click', function (){
-    hardCalled();
-});
-
 
 //starts running
-hardCalled();
+//set default mode as hard
+diffChange(1);
 
-//press hard bt to initialize diff and border
 //initialize plattes as well
 for (let i = 0; i < 6; i++) {
-    // set initial color for squres
-    plattes[i].style.backgroundColor = colors[i];
+    plattes[i].style.backgroundColor = colors[i]; // set initial color for squres
     // click listeners add
     plattes[i].addEventListener('click', function() {
-        // grab colour of selected platte
-        let clicked = this.style.backgroundColor;
-        // see if its the selected one
-        // if correct
-        if (clicked === picked && !win && i<diff) {
-            //display msg
-            msg.textContent = 'You Win x3';
-            //change color to match the winning state
-            colorChangeOnWinning(picked);
-            console.log('picked: ' + picked + '  curr: ' + clicked);
-            //change win state
-            win = true;
-            //change text on resetBt as well
-            resBt.textContent = 'Play Again?';
-        }
-        // select the wrong one
-        else if(clicked !== picked && !win && i<diff) {
+        let clicked = this.style.backgroundColor; // grab colour of selected platte
+        if (clicked === picked && !win && i < diff) selectRightPlatte();
+        else if (clicked !== picked && !win && i < diff) {
+            //wrong platte selected
             //fade the platte
             this.style.backgroundColor = '#232323';
             msg.textContent = 'Try again o.o';
@@ -82,29 +52,57 @@ for (let i = 0; i < 6; i++) {
 }
 
 // functions
-function colorChangeOnWinning(tempC) {
+function diffChange(mode) {
+    //get current header color
+    let headerC = header.style.backgroundColor;
+    //clear all mode bt's style
+    for (let i = 0; i < modeBt.length; i++) {
+        //remove backgroun color
+        modeBt[i].style.backgroundColor = '';
+        //add text color
+        modeBt[i].style.color = headerC;
+    }
+    //add header background color to curr mode button
+    modeBt[mode].style.backgroundColor = headerC;
+    //change text colour
+    modeBt[mode].style.color = 'white';
+    //change diff
+    diff = (mode + 1) * 3;
+    //reset game
+    resGame();
+}
+
+function selectRightPlatte() {
+    msg.textContent = 'You Win x3'; //display msg
+    colorChangeOnWinning(); //change color to match the winning state
+    console.log('picked: ' + picked + '  curr: ' + clicked);
+    win = true; //change win state
+    resBt.textContent = 'Play Again?'; //change text on resetBt as well
+}
+
+function colorChangeOnWinning() {
     //change color on header
     header.style.backgroundColor = picked;
     // loop through plattes to match picked
-    for (let i = 0; i < diff; i++) {
-        plattes[i].style.backgroundColor = picked;
-    }
-    //change diff bt color
-    if(diff==3){
-        ezBt.style.backgroundColor = picked;
-        hardBt.style.backgroundColor = 'none';
-        hardBt.style.color = picked;
-    }
-    else{
-        hardBt.style.backgroundColor = picked;
-        ezBt.style.backgroundColor = 'none';
-        ezBt.style.color = picked;
-    }
+    for (let i = 0; i < diff; i++) plattes[i].style.backgroundColor = picked;
+    diffBtColourChange();
     //change message and playagin bt text color
     resBt.style.color = picked;
     msg.style.color = picked;
     //change res bt text to play again
-    resBt.textContent='Play Again?'
+    resBt.textContent = 'Play Again?';
+}
+function diffBtColourChange() {
+    //change diff bt color
+    let currDiff = diff / 3 - 1;
+    for (let i = 0; i < modeBt.length; i++) {
+        // add selected diff bt style
+        if (i === currDiff) modeBt[i].style.backgroundColor = picked;
+        else {
+            modeBt[i].style.backgroundColor = 'none';
+            modeBt[i].style.color = picked;
+        }
+    }
 }
 
 function pickColor() {
@@ -148,24 +146,7 @@ function resGame() {
     //change display on title
     colorDisplay.textContent = picked;
     //remove message display
-    msg.textContent='';
+    msg.textContent = '';
     //change res bt text to new color
-    resBt.textContent='New Colors'
-}
-
-//function for hard bt pressed
-function hardCalled(){
-    //change diff
-    diff = 6;    
-    //get current header color
-    let headerC = header.style.backgroundColor;
-    //remove ez bt effect
-    ezBt.style.backgroundColor = '';
-    ezBt.style.color = headerC;
-    //add header background color to hard button
-    hardBt.style.backgroundColor = headerC;
-    //change text colour
-    hardBt.style.color = 'white';
-    //reset game with ez diff
-    resGame();
+    resBt.textContent = 'New Colors';
 }
