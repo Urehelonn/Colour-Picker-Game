@@ -8,7 +8,7 @@ body{
 
 #colorPlatte{
     width: 50%;
-    margin: 0 auto;
+    margin: 25px auto;
 }
 
 .square{
@@ -17,18 +17,63 @@ body{
     padding-bottom: 30%;
     float: left;
     margin: 1.66%;
+    border-radius: 10%;
+    transition: all 0.7s;
+    -webkit-transition: all 0.6s;
+    -moz-transition: all 0.6s;
 }
 
 #header{
     background-color: #849fc9;
+    margin: 0px;
 }
 
 #colorDisplay{
     text-transform: uppercase;
+    font-size: 35pt;
 }
 
 #nav{
     width: 100%;
     background-color: white;
     color: #849fc9;
+}
+
+h1{
+    margin:0px;
+    padding: 20px;
+    font-size: 25pt;
+    letter-spacing: 3px;
+    line-height: 1.1;
+}
+
+button{
+    border: none;
+    outline: none;
+    background: none;
+    margin:0;    
+    font-family: 'Oswald', sans-serif;
+    height:100%;    
+    border: none;
+    cursor: pointer;
+    font-weight:500;
+    font-size: 15pt;
+    transition: all 0.3s;
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+}
+button:hover{
+    background-color:#849fc9;
+    color:darkblue;
+}
+
+#msg{
+    display: inline-block;
+    width:40%;
+    font-weight:500;
+    font-size: 15pt;
+    transition: all 1s;
+    -webkit-transition: all 1s;
+    -moz-transition: all 1s;
+    
 }
